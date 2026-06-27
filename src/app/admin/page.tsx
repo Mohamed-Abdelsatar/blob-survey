@@ -27,7 +27,7 @@ export default function AdminPage() {
   return (
     <main className="max-w-2xl mx-auto px-4 py-8 flex flex-col gap-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Blob Survey Admin</h1>
+        <h1 className="text-2xl font-bold">🫧 Blob Survey</h1>
         <form action="/api/logout" method="POST">
           <button type="submit" className="text-sm text-gray-400 hover:text-gray-600">
             Log out

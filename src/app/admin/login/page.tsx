@@ -29,6 +29,7 @@ export default async function LoginPage({
         action={login}
         className="bg-white rounded-2xl p-8 shadow-lg w-80 flex flex-col gap-4"
       >
+        <div className="text-4xl text-center">🔐</div>
         <h1 className="text-xl font-bold text-center">Admin Access</h1>
         {error && (
           <p className="text-red-500 text-sm text-center">Wrong password</p>
