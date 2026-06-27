@@ -1,0 +1,35 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Survey {
+  id        String     @id @default(cuid())
+  name      String
+  eventDate DateTime?
+  createdAt DateTime   @default(now())
+  questions Question[]
+  responses Response[]
+}
+
+model Question {
+  id       String  @id @default(cuid())
+  surveyId String
+  survey   Survey  @relation(fields: [surveyId], references: [id])
+  type     String
+  prompt   String
+  options  String?
+  order    Int
+}
+
+model Response {
+  id          String   @id @default(cuid())
+  surveyId    String
+  survey      Survey   @relation(fields: [surveyId], references: [id])
+  answers     String
+  submittedAt DateTime @default(now())
+}
