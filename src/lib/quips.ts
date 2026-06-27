@@ -31,7 +31,40 @@ const quipsByMood = {
 
 export type QuipMood = keyof typeof quipsByMood;
 
+// Meme images mapped to mood — shown alongside speech bubble
+export const memesByMood: Record<QuipMood, { url: string; alt: string }[]> = {
+  excited: [
+    { url: "https://i.imgflip.com/23ls.jpg", alt: "Disaster Girl smiling" },
+    { url: "https://i.imgflip.com/30b1gx.jpg", alt: "Drake approves" },
+  ],
+  happy: [
+    { url: "https://i.imgflip.com/1g8my4.jpg", alt: "Two Buttons" },
+    { url: "https://i.imgflip.com/26jxvz.jpg", alt: "Gru's Plan" },
+  ],
+  sad: [
+    { url: "https://i.imgflip.com/2fm6x.jpg", alt: "Waiting Skeleton" },
+    { url: "https://i.imgflip.com/1c1uej.jpg", alt: "Sad Pablo Escobar" },
+  ],
+  submitted: [
+    { url: "https://i.imgflip.com/345v97.jpg", alt: "Woman Yelling At Cat" },
+    { url: "https://i.imgflip.com/24y43o.jpg", alt: "Change My Mind" },
+  ],
+  skipped: [
+    { url: "https://i.imgflip.com/1otk96.jpg", alt: "Mocking Spongebob" },
+    { url: "https://i.imgflip.com/9ehk.jpg", alt: "Batman Slapping Robin" },
+  ],
+  idle: [
+    { url: "https://i.imgflip.com/26am.jpg", alt: "Ancient Aliens" },
+    { url: "https://i.imgflip.com/261o3j.jpg", alt: "Running Away Balloon" },
+  ],
+};
+
 export function getQuip(mood: QuipMood): string {
   const pool = quipsByMood[mood];
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+export function getMeme(mood: QuipMood): { url: string; alt: string } {
+  const pool = memesByMood[mood];
   return pool[Math.floor(Math.random() * pool.length)];
 }

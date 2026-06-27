@@ -5,7 +5,7 @@ import { BlobMascot, type BlobState } from "./BlobMascot";
 import { QuestionCard } from "./QuestionCard";
 import { ProgressBar } from "./ProgressBar";
 import { CompletionScreen } from "./CompletionScreen";
-import { getQuip } from "@/lib/quips";
+import { getQuip, getMeme } from "@/lib/quips";
 
 interface Question {
   id: string;
@@ -40,6 +40,7 @@ export function SurveyFlow({ survey }: SurveyFlowProps) {
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
   const [blobState, setBlobState] = useState<BlobState>("idle");
   const [quip, setQuip] = useState<string | null>(getQuip("idle"));
+  const [meme, setMeme] = useState<{ url: string; alt: string } | null>(null);
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
@@ -53,12 +54,16 @@ export function SurveyFlow({ survey }: SurveyFlowProps) {
 
     if (currentQuestion.type === "text" && value) {
       setQuip(getQuip("submitted"));
+      setMeme(getMeme("submitted"));
     } else if (state === "excited") {
       setQuip(getQuip("excited"));
+      setMeme(getMeme("excited"));
     } else if (state === "happy") {
       setQuip(getQuip("happy"));
+      setMeme(getMeme("happy"));
     } else if (state === "sad") {
       setQuip(getQuip("sad"));
+      setMeme(getMeme("sad"));
     }
   }
 
@@ -67,6 +72,7 @@ export function SurveyFlow({ survey }: SurveyFlowProps) {
       setCurrentIndex((i) => i + 1);
       setBlobState("idle");
       setQuip(null);
+      setMeme(null);
     } else {
       setSubmitting(true);
       await fetch("/api/responses", {
@@ -84,6 +90,7 @@ export function SurveyFlow({ survey }: SurveyFlowProps) {
   function handleSkip() {
     setBlobState("idle");
     setQuip(getQuip("skipped"));
+    setMeme(getMeme("skipped"));
     if (currentIndex < questions.length - 1) {
       setCurrentIndex((i) => i + 1);
     } else {
@@ -132,7 +139,7 @@ export function SurveyFlow({ survey }: SurveyFlowProps) {
         </button>
       </div>
 
-      <BlobMascot state={blobState} quip={quip} />
+      <BlobMascot state={blobState} quip={quip} meme={meme} />
     </div>
   );
 }
