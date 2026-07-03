@@ -12,7 +12,7 @@ export function TextQuestion({ value, onChange }: TextQuestionProps) {
       onChange={(e) => onChange(e.target.value)}
       placeholder="Type your thoughts here..."
       rows={4}
-      className="w-full border-2 border-gray-200 rounded-xl p-4 text-base focus:outline-none focus:border-purple-400 resize-none"
+      className="w-full border-2 border-gray-200 rounded-xl p-5 text-lg focus:outline-none focus:border-purple-400 resize-none"
     />
   );
 }

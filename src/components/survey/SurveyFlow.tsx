@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { BlobMascot, type BlobState } from "./BlobMascot";
 import { QuestionCard } from "./QuestionCard";
 import { ProgressBar } from "./ProgressBar";
@@ -39,7 +40,7 @@ export function SurveyFlow({ survey }: SurveyFlowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
   const [blobState, setBlobState] = useState<BlobState>("idle");
-  const [quip, setQuip] = useState<string | null>(getQuip("idle"));
+  const [quip, setQuip] = useState<string | null>(null);
   const [meme, setMeme] = useState<{ url: string; alt: string } | null>(null);
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -113,33 +114,62 @@ export function SurveyFlow({ survey }: SurveyFlowProps) {
         </p>
       </div>
 
-      <div className="flex-1 flex items-center justify-center pb-32">
-        <div className="w-full animate-fade-in" key={currentQuestion.id}>
-          <QuestionCard
-            question={currentQuestion}
-            value={currentValue ?? null}
-            onChange={handleAnswer}
-          />
+      <div className="flex-1 flex items-start justify-center pb-32 px-4">
+        <div className="w-full max-w-5xl flex flex-col lg:flex-row gap-8 items-start mt-8">
+
+          {/* Question + quip */}
+          <div className="flex-1 flex flex-col items-center gap-6 w-full">
+            <div className="w-full animate-fade-in" key={currentQuestion.id}>
+              <QuestionCard
+                question={currentQuestion}
+                value={currentValue ?? null}
+                onChange={handleAnswer}
+              />
+            </div>
+
+            {/* Funny quote — under the rating, big font */}
+            {quip && (
+              <p className="text-2xl lg:text-3xl font-bold text-center text-purple-700 animate-fade-in px-4 max-w-lg leading-snug">
+                {quip}
+              </p>
+            )}
+          </div>
+
+          {/* Meme — below on mobile, right column on desktop */}
+          {meme && (
+            <div className="w-full lg:w-80 lg:flex-shrink-0 animate-fade-in">
+              <Image
+                src={meme.url}
+                alt={meme.alt}
+                width={320}
+                height={250}
+                className="rounded-2xl shadow-2xl border-4 border-gray-800 object-cover w-full max-w-sm mx-auto lg:max-w-none"
+                unoptimized
+              />
+              <p className="text-center text-xs text-gray-400 mt-1">{meme.alt}</p>
+            </div>
+          )}
         </div>
       </div>
 
       <div className="fixed bottom-32 left-0 right-0 flex justify-center gap-4 px-4">
         <button
           onClick={handleSkip}
-          className="px-6 py-2 text-gray-400 hover:text-gray-600 text-sm"
+          className="px-7 py-3 text-gray-400 hover:text-gray-600 text-base"
         >
           Skip
         </button>
         <button
           onClick={handleNext}
           disabled={!hasAnswer || submitting}
-          className="px-8 py-3 bg-purple-600 text-white rounded-xl font-semibold disabled:opacity-40 hover:bg-purple-700 transition-colors"
+          className="px-10 py-4 bg-purple-600 text-white rounded-xl text-lg font-semibold disabled:opacity-40 hover:bg-purple-700 transition-colors"
         >
           {currentIndex === questions.length - 1 ? "Submit" : "Next →"}
         </button>
       </div>
 
-      <BlobMascot state={blobState} quip={quip} meme={meme} />
+      {/* Blob stays in corner — no meme/quip attached anymore */}
+      <BlobMascot state={blobState} quip={null} meme={null} />
     </div>
   );
 }

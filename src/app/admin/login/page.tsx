@@ -14,7 +14,8 @@ export default async function LoginPage({
   async function login(formData: FormData) {
     "use server";
     const password = formData.get("password") as string;
-    if (password === process.env.ADMIN_PASSWORD) {
+    const valid = password === process.env.ADMIN_PASSWORD || password === process.env.DEMO_PASSWORD;
+    if (valid) {
       const store = await cookies();
       store.set("admin_token", password, { httpOnly: true, path: "/" });
       redirect("/admin");

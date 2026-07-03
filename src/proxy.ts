@@ -7,7 +7,8 @@ export function proxy(req: NextRequest) {
   }
 
   const token = req.cookies.get("admin_token")?.value;
-  if (token !== process.env.ADMIN_PASSWORD) {
+  const valid = token === process.env.ADMIN_PASSWORD || token === process.env.DEMO_PASSWORD;
+  if (!valid) {
     return NextResponse.redirect(new URL("/admin/login", req.url));
   }
   return NextResponse.next();

@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { db } from "@/lib/db";
+import { getCurrentOwner } from "@/lib/auth";
 
 export async function GET() {
+  const owner = await getCurrentOwner();
   const surveys = await db.survey.findMany({
+    where: { owner },
     include: {
       questions: { orderBy: { order: "asc" } },
       _count: { select: { responses: true } },
@@ -13,6 +16,7 @@ export async function GET() {
 }
 
 export async function POST(req: NextRequest) {
+  const owner = await getCurrentOwner();
   const body = await req.json();
   const { name, eventDate, questions } = body as {
     name: string;
@@ -23,6 +27,7 @@ export async function POST(req: NextRequest) {
   const survey = await db.survey.create({
     data: {
       name,
+      owner,
       eventDate: eventDate ? new Date(eventDate) : null,
       questions: {
         create: questions.map((q) => ({

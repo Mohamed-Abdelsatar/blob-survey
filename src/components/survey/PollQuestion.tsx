@@ -13,7 +13,7 @@ export function PollQuestion({ options, value, onChange }: PollQuestionProps) {
         <button
           key={opt}
           onClick={() => onChange(opt)}
-          className={`w-full py-3 px-6 rounded-xl border-2 text-left font-medium transition-all ${
+          className={`w-full py-4 px-7 rounded-xl border-2 text-left text-lg font-medium transition-all ${
             value === opt
               ? "bg-purple-600 border-purple-600 text-white"
               : "bg-white border-gray-200 hover:border-purple-400"

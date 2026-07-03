@@ -21,10 +21,10 @@ export function QuestionCard({ question, value, onChange }: QuestionCardProps) {
   const options: string[] = question.options ? JSON.parse(question.options) : [];
 
   return (
-    <div className="w-full max-w-lg mx-auto px-4">
-      <div className="text-center mb-2">
-        <span className="text-3xl">{question.type === "star" ? "⭐" : question.type === "poll" ? "🗳️" : "💬"}</span>
-        <h2 className="text-xl font-semibold mt-1">{question.prompt}</h2>
+    <div className="w-full max-w-xl mx-auto px-4">
+      <div className="text-center mb-4">
+        <span className="text-5xl">{question.type === "star" ? "⭐" : question.type === "poll" ? "🗳️" : "💬"}</span>
+        <h2 className="text-2xl font-semibold mt-2">{question.prompt}</h2>
       </div>
 
       {question.type === "star" && (

@@ -36,7 +36,7 @@ export default function AdminPage() {
       </div>
       <SurveyBuilder onCreated={load} />
       <h2 className="font-semibold text-gray-700">Your Surveys</h2>
-      <SurveyList surveys={surveys} />
+      <SurveyList surveys={surveys} onDeleted={load} />
     </main>
   );
 }

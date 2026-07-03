@@ -11,6 +11,7 @@ model Survey {
   id        String     @id @default(cuid())
   name      String
   eventDate DateTime?
+  owner     String     @default("admin")
   createdAt DateTime   @default(now())
   questions Question[]
   responses Response[]
@@ -19,7 +20,7 @@ model Survey {
 model Question {
   id       String  @id @default(cuid())
   surveyId String
-  survey   Survey  @relation(fields: [surveyId], references: [id])
+  survey   Survey  @relation(fields: [surveyId], references: [id], onDelete: Cascade)
   type     String
   prompt   String
   options  String?
@@ -29,7 +30,7 @@ model Question {
 model Response {
   id          String   @id @default(cuid())
   surveyId    String
-  survey      Survey   @relation(fields: [surveyId], references: [id])
+  survey      Survey   @relation(fields: [surveyId], references: [id], onDelete: Cascade)
   answers     String
   submittedAt DateTime @default(now())
 }

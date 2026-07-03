@@ -17,7 +17,7 @@ export function StarRating({ value, onChange }: StarRatingProps) {
             key={star}
             onClick={() => onChange(star)}
             title={starLabels[star - 1]}
-            className={`text-5xl transition-all hover:scale-125 ${
+            className={`text-6xl transition-all hover:scale-125 ${
               value !== null && star <= value ? "grayscale-0 scale-110" : "grayscale opacity-40"
             }`}
           >
@@ -26,7 +26,7 @@ export function StarRating({ value, onChange }: StarRatingProps) {
         ))}
       </div>
       {value !== null && (
-        <p className="text-sm font-semibold text-purple-600 animate-fade-in">
+        <p className="text-base font-semibold text-purple-600 animate-fade-in">
           {starLabels[value - 1]}
         </p>
       )}
